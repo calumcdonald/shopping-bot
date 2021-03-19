@@ -21,3 +21,5 @@ while not found:
 else:
     found = True
     driver.quit()
+
+print("test")
