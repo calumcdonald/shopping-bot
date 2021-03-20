@@ -5,7 +5,10 @@ import time
 CHROMEDRIVER_PATH = "chromedriver.exe"
 
 options = Options()
-options.headless = False
+#uncomment these to run completely from terminal
+#options.add_argument("--headless")
+#options.add_argument("--disable-gpu")
+#options.add_argument("--disable-extensions")
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, chrome_options=options)
 
@@ -20,7 +23,7 @@ while not found:
         add_to_basket = driver.find_elements_by_xpath("//*[@id='product-actions-touch']/div[4]/div[1]/button")[0]
         print("IN STOCK")
         found = True
-        add_to_basket.click()
+        driver.quit()
     except:
         print("OUT OF STOCK")
         time.sleep(5)
