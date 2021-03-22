@@ -6,6 +6,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 import time
+import json
+
+with open("data/details.json") as f:
+    data = json.load(f)
 
 CHROMEDRIVER_PATH = "chromedriver.exe"
 
@@ -38,14 +42,14 @@ while not inStock:
             driver.get("https://www.currys.co.uk/app/checkout")
             # enter post code
             postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='delivery_location']/input")))
-            postcode.send_keys("PA2 8RT")
+            postcode.send_keys(data["postcode"])
             time.sleep(2)
             postcode.send_keys(Keys.ENTER)
             # click free delivery
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Free')]"))).click()
             # enter email
             email = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//input[contains(text(),'Email address')]")))
-            email.send_keys("calumcdonald@gmail.com")
+            email.send_keys(data["email"])
             postcode.send_keys(Keys.ENTER)
             
         
