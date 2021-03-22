@@ -6,7 +6,7 @@
     "address1":"YOUR ADDRESS LINE 1",
     "city":"YOUR CITY",
     "postcode":"YOUR POSTCODE",
-    "county":"YOUR COUNTY"
+    "county":"YOUR COUNTY",
     "cardnum":"YOUR CARD NUM",
     "cardexpdate":"YOUR CARD EXPIRY DATE DAY",
     "cardexpmonth":"YOUR CARD EXPIRY DATE MONTH",
