@@ -51,6 +51,22 @@ while not inStock:
             email = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "email")))
             email.send_keys(data["email"])
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Continue')]"))).click()
+            # continue as guest
+            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Continue as a guest')]"))).click()
+
+            fname = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "fname")))
+            fname.send_keys(data["firstname"])
+            lname = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "lname")))
+            lname.send_keys(data["surname"])
+            mobile = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='addresses']/div[2]/div[5]/div/input")))
+            mobile.send_keys(data["mobile"])
+            postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "zip")))
+            postcode.send_keys(data["postcode"])
+            address1 = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "address")))
+            address1.send_keys(data["address1"])
+            city = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "city")))
+            city.send_keys(data["city"])
+            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'Confirm & continue')]"))).click()
     except:
         if not inStock:
             print("OUT OF STOCK")
