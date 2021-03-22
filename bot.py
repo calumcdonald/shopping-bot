@@ -48,18 +48,9 @@ while not inStock:
             # click free delivery
             WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Free')]"))).click()
             # enter email
-            email = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//input[contains(text(),'Email address')]")))
+            email = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "email")))
             email.send_keys(data["email"])
-            postcode.send_keys(Keys.ENTER)
-            
-        
-        # old code to go to checkout, might have to reuse this
-        # care protection
-        #WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Continue')]"))).click()
-        # go to basket
-        #WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Continue to basket')]"))).click()
-        # checkout
-        #WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='root']/div/div[2]/div[2]/div/div/div/div[3]/div/div/div[2]/div/button"))).click()        
+            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Continue')]"))).click()
     except:
         if not inStock:
             print("OUT OF STOCK")
