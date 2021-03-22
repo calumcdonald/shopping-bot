@@ -2,7 +2,7 @@
     "email":"YOUR EMAIL",
     "curryspassword":"YOUR CURRYS PASSWORD",
     "pppassword":"YOUR PAYPAL PASSWORD",
-    "mobile":"YOUR MOBILE NUMNBER",
+    "mobile":"YOUR MOBILE NUMBER",
     "firstname":"YOUR FIRST NAME",
     "surname":"YOUR SURNAME",
     "address1":"YOUR ADDRESS LINE 1",
@@ -10,7 +10,13 @@
     "postcode":"YOUR POSTCODE",
     "county":"YOUR COUNTY",
     "cardnum":"YOUR CARD NUM",
-    "cardexpdate":"YOUR CARD EXPIRY DATE DAY",
-    "cardexpmonth":"YOUR CARD EXPIRY DATE MONTH",
-    "CVC":"YOUR CVC"
+    "cardholdername":"YOUR CARDHOLDER NAME",
+    "cardexpmonth":"YOUR CARD EXPIRY MONTH",
+    "cardexpyear":"YOUR CARD EXPIRY YEAR",
+    "cvv":"YOUR CVV",
+    "testnum":"5555555555554444",
+    "textcardholdername":"John Doe",
+    "testexpmonth":"12",
+    "textexpyear":"30",
+    "testcvv":"123"
 }
