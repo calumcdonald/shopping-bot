@@ -85,21 +85,21 @@ while not inStock:
             WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Card')]"))).click()
             # card num
             cardNum = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "cardNumber")))
-            cardNum.send_keys("5555555555554444")
+            cardNum.send_keys(data["testcardnum"])
             # cardholder name
             cardName = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "cardholderName")))
-            cardName.send_keys("John Doe")
+            cardName.send_keys(data["testcardholdername"])
             # card exp month
             cardExpMon = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryMonth")))
-            cardExpMon.send_keys("12")
+            cardExpMon.send_keys(data["testexpmonth"])
             # card exp year
             cardExpYr = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryYear")))
-            cardExpYr.send_keys("30")
-            # CVC
+            cardExpYr.send_keys(data["testexpyear"])
+            # cvv
             cvc = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "securityCode")))
-            cvc.send_keys("123")
+            cvc.send_keys(data["testcvv"])
 
-            # PAY BB
+            # SEND THE DOLLA
             WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='submitButton']"))).click()
     except:
         if not inStock:

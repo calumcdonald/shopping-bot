@@ -14,8 +14,8 @@
     "cardexpmonth":"YOUR CARD EXPIRY MONTH",
     "cardexpyear":"YOUR CARD EXPIRY YEAR",
     "cvv":"YOUR CVV",
-    "testnum":"5555555555554444",
-    "textcardholdername":"John Doe",
+    "testcardnum":"5555555555554444",
+    "testcardholdername":"John Doe",
     "testexpmonth":"12",
     "textexpyear":"30",
     "testcvv":"123"
