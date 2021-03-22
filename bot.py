@@ -61,7 +61,7 @@ while not inStock:
             mobile = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='addresses']/div[2]/div[5]/div/input")))
             mobile.send_keys(data["mobile"])
             postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "zip")))
-            postcode.send_keys(data["postcode"])
+            postcode.send_keys(Keys.chord(Keys.CONTROL, "a"), data["postcode"])
             address1 = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "address")))
             address1.send_keys(data["address1"])
             city = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "city")))
