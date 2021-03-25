@@ -17,7 +17,6 @@ CHROMEDRIVER_PATH = "chromedriver.exe"
 options = Options()
 # uncomment these to run completely from terminal
 # options.add_argument("--headless")
-# options.add_argument("--disable-gpu")
 # options.add_argument("--disable-extensions")
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
@@ -46,7 +45,7 @@ while not inStock:
             driver.get("https://www.currys.co.uk/app/checkout")
 
             # enter post code
-            postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='delivery_loction']/input")))
+            postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='delivery_location']/input")))
             postcode.send_keys(data["postcode"])
             time.sleep(2)
             postcode.send_keys(Keys.ENTER)
@@ -130,5 +129,5 @@ while not inStock:
         else:
             print("EXCEPTION")
             inStock = False
+            driver.delete_all_cookies()
             driver.get(URL)
-        
