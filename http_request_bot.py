@@ -4,15 +4,19 @@ import json
 with open("data/details.json") as f:
     data = json.load(f)
 
+with open("data/products.json") as f:
+    products = json.load(f)
+
 s = requests.Session()
-headers = {'referer':'https://www.currys.co.uk/', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
+headers = {'Referer':'https://www.currys.co.uk/', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 
 # add to basket
-pload = '{"fupid":"10213971","quantity":1}'
+pload = '{"fupid":"' + products['phone_case']['pid'] + '","quantity":1}'
 # do i need this get?
-#get = s.get('https://www.currys.co.uk/gbuk/phones-broadband-and-sat-nav/mobile-phones-and-accessories/mobile-phone-cases/xqisit-samsung-galaxy-a21s-flex-case-clear-10213971-pdt.html')
+get = s.get(products['phone_case']['url'])
 post = s.post('https://www.currys.co.uk/api/cart/addProduct', data=pload)
 print("Add to basket status code: " + str(post.status_code))
+print(post.content)
 
 # get cart id
 post = s.post("https://api.currys.co.uk/store/api/token")
@@ -29,6 +33,11 @@ put = s.put('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/consignm
 print("Delivery slot status code: " + str(put.status_code))
 
 # stumped here
+# marketing preferences
+pload = {"email":"{}".format(data['email']),"phone":"{}".format(data['mobile']),"specialOffersViaEmail":"false"}
+put = s.put('https://api.currys.co.uk/store/api/customers/104612810/marketingPreferences', headers=headers, data=pload)
+print("Marketing preferences status code: " + str(put.status_code))
+
 # delivery info
 pload = {"type":"guest","title":"mr","firstName":"{}".format(data['firstname']),"lastName":"{}".format(data['surname']),"email":"{}".format(data['email']),"company":None,"line1":"{}".format(data['address1']),"line2":None,"line3":None,"city":"{}".format(data['city']),"postCode":"{}".format(data['postcode']),"phone":"{}".format(data['mobile'])}
 post = s.post("https://api.currys.co.uk/store/api/customers/104612810/addresses", headers=headers, data=pload)

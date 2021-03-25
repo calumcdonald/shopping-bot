@@ -12,6 +12,9 @@ import json
 with open("data/details.json") as f:
     data = json.load(f)
 
+with open("data/products.json") as f:
+    products = json.load(f)
+
 CHROMEDRIVER_PATH = "chromedriver.exe"
 
 options = Options()
@@ -21,12 +24,7 @@ options = Options()
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 
-# out of stock product
-# URL = 'https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/msi-geforce-rtx-3060-12-gb-ventus-2x-graphics-card-10221051-pdt.html'
-# in stock product
-# URL = 'https://www.currys.co.uk/gbuk/tv-and-home-entertainment/televisions/televisions/jvc-lt-40ca890-android-tv-40-smart-4k-ultra-hd-hdr-led-tv-with-google-assistant-10199520-pdt.html'
-URL = 'https://www.currys.co.uk/gbuk/phones-broadband-and-sat-nav/mobile-phones-and-accessories/mobile-phone-cases/xqisit-samsung-galaxy-a21s-flex-case-clear-10213971-pdt.html'
-driver.get(URL)
+driver.get(products['phone_case']['url'])
 
 inStock = False
 while not inStock:
