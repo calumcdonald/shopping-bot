@@ -7,16 +7,17 @@ with open("data/details.json") as f:
 with open("data/products.json") as f:
     products = json.load(f)
 
+product = products['phone_case']
+
 s = requests.Session()
 headers = {'Referer':'https://www.currys.co.uk/', 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
 
 # add to basket
-pload = '{"fupid":"' + products['phone_case']['pid'] + '","quantity":1}'
+pload = '{"fupid":"' + product['pid'] + '","quantity":1}'
 # do i need this get?
-get = s.get(products['phone_case']['url'])
+get = s.get(product['url'])
 post = s.post('https://www.currys.co.uk/api/cart/addProduct', data=pload)
 print("Add to basket status code: " + str(post.status_code))
-print(post.content)
 
 # get cart id
 post = s.post("https://api.currys.co.uk/store/api/token")
@@ -32,7 +33,7 @@ pload = {"provider":"small_box_home_delivery_standard_delivery","priceAmountWith
 put = s.put('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/consignments/small-box-home-delivery/deliverySlot', headers=headers, data=pload)
 print("Delivery slot status code: " + str(put.status_code))
 
-# stumped here
+# stumped from here
 # marketing preferences
 pload = {"email":"{}".format(data['email']),"phone":"{}".format(data['mobile']),"specialOffersViaEmail":"false"}
 put = s.put('https://api.currys.co.uk/store/api/customers/104612810/marketingPreferences', headers=headers, data=pload)
