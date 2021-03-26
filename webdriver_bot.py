@@ -21,8 +21,8 @@ CHROMEDRIVER_PATH = "chromedriver.exe"
 
 options = Options()
 # uncomment these to run completely from terminal
-# options.add_argument("--headless")
-# options.add_argument("--disable-extensions")
+options.add_argument("--headless")
+options.add_argument("--disable-extensions")
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 driver.get(product['url'])
@@ -82,19 +82,19 @@ def try_to_checkout():
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Card')]"))).click()
         # card num
         cardNum = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "cardNumber")))
-        cardNum.send_keys(data["testcardnum"])
+        cardNum.send_keys(data["cardnum"])
         # cardholder name
         cardName = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "cardholderName")))
-        cardName.send_keys(data["testcardholdername"])
+        cardName.send_keys(data["cardholdername"])
         # card exp month
         cardExpMon = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryMonth")))
-        cardExpMon.send_keys(data["testexpmonth"])
+        cardExpMon.send_keys(data["cardexpmonth"])
         # card exp year
         cardExpYr = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryYear")))
-        cardExpYr.send_keys(data["testexpyear"])
+        cardExpYr.send_keys(data["cardexpyear"])
         # cvv
         cvv = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "securityCode")))
-        cvv.send_keys(data["testcvv"])
+        cvv.send_keys(data["cvv"])
 
         # SEND THE DOLLA
         WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='submitButton']"))).click()
@@ -115,7 +115,7 @@ while not checked_out:
         # click off of cookie notice
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='onetrust-accept-btn-handler']"))).click()
         price = driver.find_element_by_xpath("//*[@id='product-actions']/div[2]/div/div/span").text
-        if(price == "£"+product['price']+".00"):
+        if(price[1:len(price)] == product['price']):
             add_to_basket = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='product-actions']/div[4]/div[1]/button")))
             # code won't get past here if it's out of stock
             print('IN STOCK')
@@ -124,6 +124,10 @@ while not checked_out:
             time.sleep(2)
             
             try_to_checkout()
+        else:
+            print("INCORRECT PRICE")
+            time.sleep(5)
+            refresh()
     except:
         print("OUT OF STOCK")
         time.sleep(1)
