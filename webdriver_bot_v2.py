@@ -37,13 +37,17 @@ def try_to_checkout():
         # straight to checkout
         driver.get("https://www.currys.co.uk/app/checkout")
         # enter post code
-        postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='delivery_location']/input")))
-        postcode.send_keys(data["postcode"])
-        time.sleep(2)
-        postcode.send_keys(Keys.ENTER)
-        # print("POST CODE ENTERED")
+        try:
+            postcode = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='delivery_location']/input")))
+            postcode.send_keys(data["postcode"])
+            time.sleep(2)
+            postcode.send_keys(Keys.ENTER)
+            # print("POST CODE ENTERED")
+        except:
+            pass
         # click free delivery
-        WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Free')]"))).click()
+        WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//button[contains(text(),'Free')]"))).click()
+        #WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(),'Free')]"))).click()
         # print("DELIVERY SELECTED")
         # enter email
         email = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "email")))
