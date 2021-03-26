@@ -45,3 +45,8 @@ print("Marketing preferences status code: " + str(put.status_code))
 pload = json.dumps({"type":"guest","title":"mr","firstName":data['firstname'],"lastName":data['surname'],"email":data['email'],"company":None,"line1":data['address1'],"line2":None,"line3":None,"city":data['city'],"postCode":data['postcode'],"phone":data['mobile']})
 post = s.post("https://api.currys.co.uk/store/api/customers/104612810/addresses", headers=headers, data=pload)
 print("Delivery info status code: " + str(post.status_code))
+
+# payment method
+pload = {"paymentMethodType":"card"}
+post = s.post('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/payments', headers=headers, data=pload)
+print("Payment method status code: " + str(post.status_code))
