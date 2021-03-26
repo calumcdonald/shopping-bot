@@ -27,27 +27,13 @@ options = Options()
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 driver.get(product['url'])
 
-in_stock = False
-def restart():
-    in_stock = False
+checked_out = False
+def refresh():
     driver.delete_all_cookies()
     driver.get(product['url'])
 
-while not in_stock:
+def try_to_checkout():
     try:
-        # click off of cookie notice
-        #driver.find_element_by_xpath("//*[@id='onetrust-accept-btn-handler']").click()
-        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='onetrust-accept-btn-handler']"))).click()
-        in_stock = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='product-actions']/div[4]/div[1]/button")))
-        # code won't get past here if it's out of stock
-        print('IN STOCK')
-        # add to basket
-        in_stock.click()
-        in_stock = True
-        # print("ADDED TO BASKET")
-        # let basket update
-        time.sleep(2)
-
         # straight to checkout
         driver.get("https://www.currys.co.uk/app/checkout")
         # enter post code
@@ -127,11 +113,29 @@ while not in_stock:
         # SEND THE DOLLA
         WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='submitButton']"))).click()
         print("CHECKING OUT...")
+        checked_out = True
     except:
-        if not in_stock:
-            print("OUT OF STOCK")
-            time.sleep(5)
-            restart()
-        else:
-            print("EXCEPTION")
-            restart()
+        print("EXCEPTION")
+        refresh()
+
+while not checked_out:
+    try:
+        # click off of cookie notice
+        #driver.find_element_by_xpath("//*[@id='onetrust-accept-btn-handler']").click()
+        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='onetrust-accept-btn-handler']"))).click()
+        add_to_basket = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='product-actions']/div[4]/div[1]/button")))
+        # code won't get past here if it's out of stock
+        print('IN STOCK')
+        add_to_basket.click()
+        # print("ADDED TO BASKET")
+        # let basket update
+        time.sleep(2)
+        
+        try_to_checkout()
+    except:
+        print("OUT OF STOCK")
+        time.sleep(5)
+        refresh()
+
+print("BINGO.")
+driver.quit()
