@@ -1,10 +1,42 @@
 {
     "phone_case":{
         "url":"https://www.currys.co.uk/gbuk/phones-broadband-and-sat-nav/mobile-phones-and-accessories/mobile-phone-cases/xqisit-samsung-galaxy-a21s-flex-case-clear-10213971-pdt.html",
-        "pid":"10213971"
+        "pid":"10213971",
+        "price":"9.99"
     },
     "MSI_RTX3060_VENTUS_2X":{
         "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/msi-geforce-rtx-3060-12-gb-ventus-2x-graphics-card-10221051-pdt.html",
-        "pid":"10221051"
+        "pid":"10221051",
+        "price":"350"
+    },
+    "MSI_RTX3060_VENTUS_2X_OC":{
+        "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/msi-geforce-rtx-3060-12-gb-ventus-2x-oc-graphics-card-10220926-pdt.html",
+        "pid":"10220926",
+        "price":"375"
+    },
+    "MSI_RTX3060_VENTUS_3X_OC":{
+        "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/msi-geforce-rtx-3060-12-gb-ventus-3x-oc-graphics-card-10220976-pdt.html",
+        "pid":"10220976",
+        "price":"395"
+    },
+    "GIGABYTE_RTX3060_VISION_OC":{
+        "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/gigabyte-geforce-rtx-3060-12-gb-vision-oc-graphics-card-10221312-pdt.html",
+        "pid":"10221312",
+        "price":"419"
+    },
+    "MSI_RTX3060_GAMING_X":{
+        "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/msi-geforce-rtx-3060-12-gb-gaming-x-graphics-card-10220978-pdt.html",
+        "pid":"10220978",
+        "price":"420"
+    },
+    "ASUS_RTX3060Ti_DUAL_OC":{
+        "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/asus-geforce-rtx-3060-ti-8-gb-dual-oc-graphics-card-10219255-pdt.html",
+        "pid":"10219255",
+        "price":"443"
+    },
+    "PNY_RTX3060Ti_XLR8_GAMING_REVEL_EDITION":{
+        "url":"https://www.currys.co.uk/gbuk/computing-accessories/components-upgrades/graphics-cards/pny-geforce-rtx-3060-ti-8-gb-xlr8-gaming-revel-edition-graphics-card-10218694-pdt.html",
+        "pid":"10218694",
+        "price":"450"
     }
 }
