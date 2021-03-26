@@ -128,4 +128,4 @@ while not inStock:
             print("EXCEPTION")
             inStock = False
             driver.delete_all_cookies()
-            driver.get(URL)
+            driver.get(product['url'])
