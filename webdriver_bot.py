@@ -15,14 +15,14 @@ with open("data/details.json") as f:
 with open("data/products.json") as f:
     products = json.load(f)
 
-product = products['MSI_RTX3060_VENTUS_2X']
+product = products['MSI_RTX3060_VENTUS_2X_OC']
 
 CHROMEDRIVER_PATH = "chromedriver.exe"
 
 options = Options()
 # uncomment these to run completely from terminal
-# options.add_argument("--headless")
-# options.add_argument("--disable-extensions")
+options.add_argument("--headless")
+options.add_argument("--disable-extensions")
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 driver.get(product['url'])
@@ -82,20 +82,19 @@ def try_to_checkout():
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Card')]"))).click()
         # card num
         cardNum = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "cardNumber")))
-        cardNum.send_keys(data["testcardnum"])
+        cardNum.send_keys(data["cardnum"])
         # cardholder name
         cardName = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "cardholderName")))
-        cardName.send_keys(data["testcardholdername"])
+        cardName.send_keys(data["cardholdername"])
         # card exp month
         cardExpMon = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryMonth")))
-        cardExpMon.send_keys(data["testexpmonth"])
+        cardExpMon.send_keys(data["cardexpmonth"])
         # card exp year
         cardExpYr = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryYear")))
-        cardExpYr.send_keys(data["testexpyear"])
+        cardExpYr.send_keys(data["cardexpyear"])
         # cvv
         cvv = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "securityCode")))
-        cvv.send_keys(data["testcvv"])
-        # print("CVV ENTERED")
+        cvv.send_keys(data["cvv"])
 
         # SEND THE DOLLA
         WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='submitButton']"))).click()
