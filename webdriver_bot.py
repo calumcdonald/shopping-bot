@@ -115,7 +115,11 @@ while not checked_out:
         # click off of cookie notice
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='onetrust-accept-btn-handler']"))).click()
         price = driver.find_element_by_xpath("//*[@id='product-actions']/div[2]/div/div/span").text
-        if(price[1:len(price)] == product['price']):
+        # if price is what Currys says
+        #price[1:len(price)] == product['price']
+        # if price is below 450
+        price = float(price[1:len(price)])
+        if(price <= 450):
             add_to_basket = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='product-actions']/div[4]/div[1]/button")))
             # code won't get past here if it's out of stock
             print('IN STOCK')
