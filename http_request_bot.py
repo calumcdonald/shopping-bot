@@ -36,8 +36,10 @@ put = s.put('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/consignm
 print("Delivery slot status code: " + str(put.status_code))
 
 # get the customer id
-post = s.post("https://api.currys.co.uk/store/api/customers")
+pload = json.dumps({'email':data['email'],'isGuest':True,'password':''})
+post = s.post("https://api.currys.co.uk/store/api/customers", headers=headers, data=pload)
 customer_id = json.loads(post.content)['payload']['customerId']
+print(customer_id)
 
 # stumped from here
 # marketing preferences
