@@ -35,15 +35,19 @@ pload = {"provider":"small_box_home_delivery_standard_delivery","priceAmountWith
 put = s.put('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/consignments/small-box-home-delivery/deliverySlot', headers=headers, data=pload)
 print("Delivery slot status code: " + str(put.status_code))
 
+# get the customer id
+post = s.post("https://api.currys.co.uk/store/api/customers")
+customer_id = json.loads(post.content)['payload']['customerId']
+
 # stumped from here
 # marketing preferences
 pload = json.dumps({"email":data['email'],"phone":data['mobile'],"specialOffersViaEmail":False})
-put = s.put('https://api.currys.co.uk/store/api/customers/104612810/marketingPreferences', headers=headers, data=pload)
+put = s.put('https://api.currys.co.uk/store/api/customers/' + customer_id + '/marketingPreferences', headers=headers, data=pload)
 print("Marketing preferences status code: " + str(put.status_code))
 
 # delivery info
 pload = json.dumps({"type":"guest","title":"mr","firstName":data['firstname'],"lastName":data['surname'],"email":data['email'],"company":None,"line1":data['address1'],"line2":None,"line3":None,"city":data['city'],"postCode":data['postcode'],"phone":data['mobile']})
-post = s.post("https://api.currys.co.uk/store/api/customers/104612810/addresses", headers=headers, data=pload)
+post = s.post('https://api.currys.co.uk/store/api/customers/' + customer_id + '/addresses', headers=headers, data=pload)
 print("Delivery info status code: " + str(post.status_code))
 
 # payment method
