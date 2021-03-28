@@ -24,6 +24,15 @@ print("Add to basket status code: " + str(post.status_code))
 post = s.post("https://api.currys.co.uk/store/api/token")
 cart_id = json.loads(post.content)['bid']
 
+# get password
+
+
+# get the customer id
+pload = json.dumps({'email':data['email'],'isGuest':True,'password':''})
+post = s.post("https://api.currys.co.uk/store/api/customers", headers=headers, data=pload)
+customer_id = json.loads(post.content)['payload']['customerId']
+print(customer_id)
+
 # delivery location
 pload = {'location': 'PA2 8RT', 'latitude': 55.8250598, 'longitude': -4.4427907}
 put = s.put('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/deliveryLocation', headers=headers, data=pload)
@@ -34,12 +43,6 @@ deldate = datetime.now() + timedelta(days = 2)
 pload = {"provider":"small_box_home_delivery_standard_delivery","priceAmountWithVat":0,"priceVatRate":20,"priceCurrency":"GBP","date":deldate.strftime("%Y-%m-%d"),"timeSlot":"2DST"}
 put = s.put('https://api.currys.co.uk/store/api/baskets/' + cart_id + '/consignments/small-box-home-delivery/deliverySlot', headers=headers, data=pload)
 print("Delivery slot status code: " + str(put.status_code))
-
-# get the customer id
-pload = json.dumps({'email':data['email'],'isGuest':True,'password':''})
-post = s.post("https://api.currys.co.uk/store/api/customers", headers=headers, data=pload)
-customer_id = json.loads(post.content)['payload']['customerId']
-print(customer_id)
 
 # stumped from here
 # marketing preferences
