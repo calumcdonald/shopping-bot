@@ -30,8 +30,9 @@ driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 driver.get(product['url'])
 
 def print_to_log(content):
+    print(content)
     f = open("stock_log.txt", "a")
-    f.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ': ' + content)
+    f.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ': ' + content + '\n')
     f.close()
 
 def refresh():
@@ -105,17 +106,15 @@ def try_to_checkout():
 
         # SEND THE DOLLA
         WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='submitButton']"))).click()
-        print("CHECKING OUT...")
+        print_to_log('CHECKING OUT...')
         
         try:
-            WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, "//div[contains(text(),'Card')]")))
-            print("COULD NOT CHECKOUT")
+            WebDriverWait(driver, 45).until(EC.visibility_of_element_located((By.XPATH, "//div[contains(text(),'Card')]")))
             print_to_log('COULD NOT CHECKOUT')
             refresh()
         except:
             checked_out = True
     except:
-        print("EXCEPTION")
         print_to_log('EXCEPTION')
         refresh()
 
@@ -128,10 +127,9 @@ while not checked_out:
         #price[1:len(price)] == product['price']
         # if price is below 450
         price = float(price[1:len(price)])
-        if(price <= 450):
+        if(price >= 450):
             add_to_basket = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='product-actions']/div[4]/div[1]/button")))
             # code won't get past here if it's out of stock
-            print('IN STOCK')
             print_to_log('IN STOCK')
             add_to_basket.click()
             # let basket update
@@ -139,7 +137,7 @@ while not checked_out:
             
             try_to_checkout()
         else:
-            print("INCORRECT PRICE")
+            print_to_log('INCORRECT PRICE ' + '(' + str(price) + ')')
             time.sleep(5)
             refresh()
     except:
@@ -147,6 +145,5 @@ while not checked_out:
         time.sleep(1)
         refresh()
 
-print("BINGO.")
 print_to_log('BINGO.')
 driver.quit()
