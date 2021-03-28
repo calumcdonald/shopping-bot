@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import Select
 import time
+from datetime import datetime
 import json
 
 with open("data/details.json") as f:
@@ -15,23 +16,29 @@ with open("data/details.json") as f:
 with open("data/products.json") as f:
     products = json.load(f)
 
-product = products['MSI_RTX3060_VENTUS_2X_OC']
+#product = products['MSI_RTX3060_VENTUS_2X_OC']
+product = products['phone_case']
 
 CHROMEDRIVER_PATH = "chromedriver.exe"
 
 options = Options()
 # uncomment these to run completely from terminal
-options.add_argument("--headless")
-options.add_argument("--disable-extensions")
+# options.add_argument("--headless")
+# options.add_argument("--disable-extensions")
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 driver.get(product['url'])
 
-checked_out = False
+def print_to_log(content):
+    f = open("stock_log.txt", "a")
+    f.write(datetime.now().strftime("%d/%m/%Y %H:%M:%S") + ': ' + content)
+    f.close()
+
 def refresh():
     driver.delete_all_cookies()
     driver.get(product['url'])
 
+checked_out = False
 def try_to_checkout():
     try:
         # straight to checkout
@@ -82,19 +89,19 @@ def try_to_checkout():
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[contains(text(),'Card')]"))).click()
         # card num
         cardNum = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "cardNumber")))
-        cardNum.send_keys(data["cardnum"])
+        cardNum.send_keys(data["testcardnum"])
         # cardholder name
         cardName = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "cardholderName")))
-        cardName.send_keys(data["cardholdername"])
+        cardName.send_keys(data["testcardholdername"])
         # card exp month
         cardExpMon = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryMonth")))
-        cardExpMon.send_keys(data["cardexpmonth"])
+        cardExpMon.send_keys(data["testexpmonth"])
         # card exp year
         cardExpYr = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "expiryDate.expiryYear")))
-        cardExpYr.send_keys(data["cardexpyear"])
+        cardExpYr.send_keys(data["testexpyear"])
         # cvv
         cvv = WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.NAME, "securityCode")))
-        cvv.send_keys(data["cvv"])
+        cvv.send_keys(data["testcvv"])
 
         # SEND THE DOLLA
         WebDriverWait(driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='submitButton']"))).click()
@@ -103,11 +110,13 @@ def try_to_checkout():
         try:
             WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, "//div[contains(text(),'Card')]")))
             print("COULD NOT CHECKOUT")
+            print_to_log('COULD NOT CHECKOUT')
             refresh()
         except:
             checked_out = True
     except:
         print("EXCEPTION")
+        print_to_log('EXCEPTION')
         refresh()
 
 while not checked_out:
@@ -123,6 +132,7 @@ while not checked_out:
             add_to_basket = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='product-actions']/div[4]/div[1]/button")))
             # code won't get past here if it's out of stock
             print('IN STOCK')
+            print_to_log('IN STOCK')
             add_to_basket.click()
             # let basket update
             time.sleep(2)
@@ -138,4 +148,5 @@ while not checked_out:
         refresh()
 
 print("BINGO.")
+print_to_log('BINGO.')
 driver.quit()
