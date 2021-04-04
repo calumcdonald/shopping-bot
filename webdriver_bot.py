@@ -10,8 +10,6 @@ import time
 from datetime import datetime
 import json
 
-print("hellolooo")
-
 with open("data/details.json") as f:
     data = json.load(f)
 
