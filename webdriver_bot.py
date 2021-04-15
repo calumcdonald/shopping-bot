@@ -122,7 +122,6 @@ while not checked_out:
         # click off of cookie notice
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='onetrust-accept-btn-handler']"))).click()
         price = WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='product-actions']/div[2]/div/div/span"))).text
-        #price = driver.find_element_by_xpath("//*[@id='product-actions']/div[2]/div/div/span").text
         # if price is what Currys says
         #price[1:len(price)] == product['price']
         # if price is below 450
