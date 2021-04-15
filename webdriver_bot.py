@@ -16,14 +16,14 @@ with open("data/details.json") as f:
 with open("data/products.json") as f:
     products = json.load(f)
 
-product = products['MSI_RTX3060_VENTUS_2X_OC']
+product = products['GIGABYTE_RTX3060_EAGLE_OC']
 
 CHROMEDRIVER_PATH = "chromedriver.exe"
 
 options = Options()
 # uncomment these to run completely from terminal
-options.add_argument("--headless")
-options.add_argument("--disable-extensions")
+#options.add_argument("--headless")
+#options.add_argument("--disable-extensions")
 
 driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 driver.get(product['url'])
@@ -121,7 +121,8 @@ while not checked_out:
     try:
         # click off of cookie notice
         WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='onetrust-accept-btn-handler']"))).click()
-        price = driver.find_element_by_xpath("//*[@id='product-actions']/div[2]/div/div/span").text
+        price = WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='product-actions']/div[2]/div/div/span"))).text
+        #price = driver.find_element_by_xpath("//*[@id='product-actions']/div[2]/div/div/span").text
         # if price is what Currys says
         #price[1:len(price)] == product['price']
         # if price is below 450
